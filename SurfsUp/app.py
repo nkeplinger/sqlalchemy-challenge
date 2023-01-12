@@ -50,8 +50,13 @@ def precipitaiton():
     #perform Query
     twelve_month_data = session.query(measurement.date, measurement.prcp).filter(measurement.date >= last_twelve_months).all()
     
+    
+    # Convert list of tuples into normal list
+    results = list(np.ravel(twelve_month_data))
     #make it JSON-ified
-    return jsonify(twelve_month_data)
+    return results
+
+    #return jsonify(twelve_month_data)
 
 
 @app.route("/api/v1.0/station")
@@ -61,10 +66,14 @@ def station():
 
     """Returns jsonified data of all of the stations in the database"""
     #perform Query
-    stations = session.query(stations.station, stations.name).all()
+    stationss = session.query(measurement.station, func.count(measurement.station)).group_by(measurement.station).order_by(func.count(measurement.station).desc()).all()
+
+    # Convert list of tuples into normal list
+    results_station = list(np.ravel(stationss))
 
     #make it JSON-ified
-    return jsonify(stations)
+    return jsonify(results_station)
+
 @app.route("/api/v1.0/tobs")
 def tobs():
     # Create our session (link) from Python to the DB
@@ -79,8 +88,10 @@ def tobs():
     #perform Query:
     twelve_month_temp_data = session.query(measurement.station, measurement.date, measurement.tobs).filter(measurement.date >= last_twelve_months, measurement.station == most_active).all()
     
+    # Convert list of tuples into normal list
+    results_tobs = list(np.ravel(twelve_month_temp_data))
     #make it JSON-ified:
-    return jsonify(twelve_month_temp_data)
+    return jsonify(results_tobs)
 
 
 
