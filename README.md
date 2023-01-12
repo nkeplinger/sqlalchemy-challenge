@@ -18,8 +18,8 @@ All input data (.sqlite and csv reference files) can be found at the following l
 `SurfsUp/hawaii_measurements.csv`
 `SurfsUp/hawaii_stations.csv`
 
-### Additional Files
-An additional app.py file can be found at the following location: 
+### API Python File
+An additional app.py file for queries and api generation can be found at the following location: 
 `SurfsUp/hawaii_stations.csv`
 
 ##Thanks :) 
